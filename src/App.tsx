@@ -18,13 +18,17 @@ function App() {
         })}
       >
       <TextField label="New item" error={undefined} />
+
         <TextField
+        id="123"
+        labelProps={{className:"bg-blue-200 rounded-xl w-fit px-2"}}
           {...register("email", { required: "this field is required" })}
           label="Email"
           type="email"
           startIcon={<Mail />}
           error={errors.email && String(errors.email?.message)}
         />
+
         <PasswordInput
           label="Confirm Password"
           {...register("ConfirmPassword", {  
@@ -65,6 +69,7 @@ function App() {
         >
           Login
         </button>
+
       </form>
       
     </div>

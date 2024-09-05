@@ -2,22 +2,36 @@ import { Eye, EyeOff, Lock } from "lucide-react";
 import React, { ComponentProps, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 type textFieldProps = {
+  labelProps?: ComponentProps<"label">;
   label: string;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   error: string | undefined;
 } & ComponentProps<"input">;
-
 const TextField = React.forwardRef<HTMLInputElement, textFieldProps>(
-  ({ label, startIcon, endIcon, error, ...props }, ref) => {
+  ({ label, startIcon, endIcon, id, error, labelProps, ...props }, ref) => {
+    // const finalId = id ? id : React.useId();
+    const generatedId = React.useId();
+    const finalId = id ? id : generatedId;
+
     return (
       <div className="flex flex-col gap-2">
-        <label>{label}</label>
+        <label
+          {...labelProps}
+          className={twMerge(
+            error ? "text-red-500" : "",
+            labelProps?.className
+          )}
+          htmlFor={finalId}
+        >
+          {label}
+        </label>
         <div className="flex items-center relative">
           <div className="absolute left-2 flex items-center">
             {startIcon && startIcon}
           </div>
           <input
+            id={finalId}
             className={twMerge(
               `w-full py-2 px-10 outline-none ring-1 ring-transparent focus:ring-blue-400  rounded-sm border`,
               error ? "border-red-500" : " ",
